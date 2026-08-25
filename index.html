@@ -326,6 +326,170 @@
     color:var(--grey-soft);
   }
 
+  /* ---------- catalogue: 8 product slots, ready for future releases ---------- */
+  .titles-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:1px;
+    background:var(--rule);
+    border:1px solid var(--rule);
+  }
+  .title-card{
+    background:var(--paper);
+    padding:34px 22px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    gap:28px;
+    min-height:150px;
+    border:none;
+    text-align:left;
+    font:inherit;
+    cursor:pointer;
+    transition:background 0.4s ease;
+  }
+  .title-card:hover{ background:var(--paper-warm); }
+  .title-card .title-num{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:16px;
+    color:var(--grey-soft);
+    transition:color 0.4s ease;
+  }
+  .title-card:hover .title-num{ color:var(--violet); }
+  .title-card .title-body{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+  }
+  .title-card .diamond{
+    background:var(--rule);
+    transition:background 0.4s ease;
+  }
+  .title-card:hover .diamond{ background:var(--violet); }
+  .title-card .title-status{
+    font-family:'Inter', sans-serif;
+    font-size:10.5px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--grey-soft);
+  }
+  @media (max-width:900px){
+    .titles-grid{ grid-template-columns:repeat(2, 1fr); }
+  }
+  @media (max-width:520px){
+    .titles-grid{ grid-template-columns:1fr; }
+  }
+
+  .title-card[data-status="released"] .title-num{ color:var(--violet); }
+  .title-card .title-name{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:18px;
+    margin-top:2px;
+  }
+
+  /* ---------- product popup ---------- */
+  .product-modal-overlay{
+    position:fixed;
+    inset:0;
+    z-index:9600;
+    background:rgba(10,10,10,0.86);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.35s ease;
+  }
+  .product-modal-overlay.active{
+    opacity:1;
+    pointer-events:auto;
+  }
+  .product-modal{
+    background:var(--paper);
+    max-width:440px;
+    width:100%;
+    padding:44px 40px;
+    position:relative;
+    transform:translateY(14px) scale(0.98);
+    opacity:0;
+    transition:transform 0.4s ease, opacity 0.4s ease;
+  }
+  .product-modal-overlay.active .product-modal{
+    transform:translateY(0) scale(1);
+    opacity:1;
+  }
+  .product-modal-close{
+    position:absolute;
+    top:18px; right:18px;
+    width:28px; height:28px;
+    border:none;
+    background:none;
+    cursor:pointer;
+    font-family:'Inter', sans-serif;
+    font-size:20px;
+    line-height:1;
+    color:var(--grey-soft);
+    transition:color 0.3s ease, transform 0.3s ease;
+  }
+  .product-modal-close:hover{ color:var(--ink); transform:rotate(90deg); }
+  .product-modal-num{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:15px;
+    color:var(--grey-soft);
+  }
+  .product-modal-title{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:30px;
+    margin:12px 0 6px;
+  }
+  .product-modal-platform{
+    font-family:'Inter', sans-serif;
+    font-size:10.5px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--grey-soft);
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom:22px;
+  }
+  .product-modal-desc{
+    color:var(--grey);
+    font-size:18px;
+    line-height:1.65;
+    margin-bottom:30px;
+  }
+  .product-modal-cta{
+    display:inline-block;
+    font-family:'Inter', sans-serif;
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    text-decoration:none;
+    color:#fff;
+    background:var(--ink);
+    padding:15px 26px;
+    transition:background 0.3s ease;
+  }
+  .product-modal-cta:hover{ background:var(--violet); }
+  .product-modal-soon{
+    font-family:'Inter', sans-serif;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--grey-soft);
+  }
+  @media (prefers-reduced-motion: reduce){
+    .product-modal-overlay, .product-modal{ transition:none; }
+  }
+
   /* ---------- endpaper divider (the one purple image) ---------- */
   .endpaper{
     position:relative;
@@ -613,7 +777,74 @@
   </div>
 </section>
 
-<section class="endpaper reveal">
+<section class="catalogue">
+  <div class="block reveal">
+    <div class="block-head">
+      <h2>The Catalogue</h2>
+      <span class="roman">III.</span>
+    </div>
+    <div class="titles-grid">
+      <button type="button" class="title-card" data-status="soon" data-num="I." data-title="" data-platform="" data-description="" data-link="">
+        <span class="title-num">I.</span>
+        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Coming Soon</p></div>
+      </button>
+      <button type="button" class="title-card" data-status="soon" data-num="II." data-title="" data-platform="" data-description="" data-link="">
+        <span class="title-num">II.</span>
+        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Coming Soon</p></div>
+      </button>
+      <button type="button" class="title-card" data-status="soon" data-num="III." data-title="" data-platform="" data-description="" data-link="">
+        <span class="title-num">III.</span>
+        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Coming Soon</p></div>
+      </button>
+      <button type="button" class="title-card" data-status="soon" data-num="IV." data-title="" data-platform="" data-description="" data-link="">
+        <span class="title-num">IV.</span>
+        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Coming Soon</p></div>
+      </button>
+      <button type="button" class="title-card" data-status="soon" data-num="V." data-title="" data-platform="" data-description="" data-link="">
+        <span class="title-num">V.</span>
+        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Coming Soon</p></div>
+      </button>
+      <button type="button" class="title-card" data-status="soon" data-num="VI." data-title="" data-platform="" data-description="" data-link="">
+        <span class="title-num">VI.</span>
+        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Coming Soon</p></div>
+      </button>
+      <button type="button" class="title-card" data-status="soon" data-num="VII." data-title="" data-platform="" data-description="" data-link="">
+        <span class="title-num">VII.</span>
+        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Coming Soon</p></div>
+      </button>
+      <button type="button" class="title-card" data-status="soon" data-num="VIII." data-title="" data-platform="" data-description="" data-link="">
+        <span class="title-num">VIII.</span>
+        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Coming Soon</p></div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!--
+  HOW TO PUBLISH A TITLE HERE:
+  Find the matching <button class="title-card"> above and fill in its data attributes — nothing else needs to change:
+
+    data-status="released"
+    data-title="Your App Name"
+    data-platform="ios"            (or "android" or "windows")
+    data-description="One or two sentences about the app."
+    data-link="https://your-download-or-store-link"
+
+  The card's own label and the popup (title, platform, description, and the correct
+  download / App Store / Google Play button) will fill in automatically.
+-->
+
+<div class="product-modal-overlay" id="product-modal-overlay">
+  <div class="product-modal" role="dialog" aria-modal="true" aria-labelledby="pm-title">
+    <button type="button" class="product-modal-close" id="pm-close" aria-label="Close">&times;</button>
+    <span class="product-modal-num" id="pm-num"></span>
+    <h3 class="product-modal-title" id="pm-title"></h3>
+    <p class="product-modal-platform" id="pm-platform"><span class="diamond small" aria-hidden="true"></span><span id="pm-platform-text"></span></p>
+    <p class="product-modal-desc" id="pm-desc"></p>
+    <a class="product-modal-cta" id="pm-cta" href="#" target="_blank" rel="noopener">Download</a>
+    <p class="product-modal-soon" id="pm-soon">This title hasn't been announced yet — check back soon, or write to <a href="mailto:gg@hcra.me" style="color:inherit;">gg@hcra.me</a>.</p>
+  </div>
+</div>
   <div class="endpaper-frame">
     <img src="assets/marbled-endpaper.png" alt="Marbled endpaper, hand-combed in violet — a bookbinder's flourish between chapters">
   </div>
@@ -625,7 +856,7 @@
 
 <section class="founder">
   <div class="reveal">
-    <span class="roman">III.</span>
+    <span class="roman">IV.</span>
     <blockquote>"There is no studio behind this mark, no team, no board — only the discipline of finishing what gets started. Every line, every release, every decision under HCRA is made by one person, working alone."</blockquote>
     <cite><span class="diamond small" aria-hidden="true" style="margin-right:8px;"></span><span class="blackout-trigger" data-word="9AA">9AA</span>, Founder &amp; Engineer</cite>
   </div>
