@@ -383,11 +383,22 @@
   }
 
   .title-card[data-status="released"] .title-num{ color:var(--violet); }
+  .title-card[data-status="announced"] .title-num{ color:var(--grey); }
+  .title-card[data-status="announced"] .title-status{ color:var(--ink); }
   .title-card .title-name{
     font-family:'Fraunces', serif;
     font-weight:500;
     font-size:18px;
     margin-top:2px;
+  }
+  .title-card .title-platform-tag{
+    font-family:'Inter', sans-serif;
+    font-size:9.5px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--grey-soft);
+    margin-top:4px;
+    display:block;
   }
 
   /* ---------- product popup ---------- */
@@ -485,6 +496,17 @@
     letter-spacing:0.1em;
     text-transform:uppercase;
     color:var(--grey-soft);
+  }
+  .product-modal-badge{
+    display:inline-block;
+    font-family:'Inter', sans-serif;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--grey);
+    border:1px solid var(--rule);
+    padding:13px 22px;
   }
   @media (prefers-reduced-motion: reduce){
     .product-modal-overlay, .product-modal{ transition:none; }
@@ -723,7 +745,7 @@
 <section class="hero">
   <p class="eyebrow">An Independent Software House</p>
   <div class="logo-wrap">
-  <img class="logo blackout-trigger" data-word="HCRA" src="hcra-logo.png" alt="HCRA">
+  <img class="logo blackout-trigger" data-word="HCRA" src="hcra-logo.png" alt="HCRA — wordmark with colophon diamond">
   </div>
   <p class="tagline">Applications and games, composed for iOS, Android, and Windows.</p>
   <p class="founded"><span class="diamond small pulse" style="animation-delay:0s" aria-hidden="true"></span>Founded MMXXVI by <span class="blackout-trigger" data-word="9AA">9AA</span></p>
@@ -784,21 +806,21 @@
       <span class="roman">III.</span>
     </div>
     <div class="titles-grid">
-      <button type="button" class="title-card" data-status="soon" data-num="I." data-title="" data-platform="" data-description="" data-link="">
+      <button type="button" class="title-card" data-status="announced" data-num="I." data-title="Windows Toolkit" data-platform="windows" data-description="A collection of small, focused utilities for Windows — in development." data-link="">
         <span class="title-num">I.</span>
-        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Coming Soon</p></div>
+        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Windows Toolkit</p><span class="title-platform-tag">Windows &middot; Coming Soon</span></div>
       </button>
-      <button type="button" class="title-card" data-status="soon" data-num="II." data-title="" data-platform="" data-description="" data-link="">
+      <button type="button" class="title-card" data-status="announced" data-num="II." data-title="Puzzle Game" data-platform="ios" data-description="A puzzle game for iOS — arriving soon." data-link="">
         <span class="title-num">II.</span>
-        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Coming Soon</p></div>
+        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Puzzle Game</p><span class="title-platform-tag">iOS &middot; Coming Soon</span></div>
       </button>
-      <button type="button" class="title-card" data-status="soon" data-num="III." data-title="" data-platform="" data-description="" data-link="">
+      <button type="button" class="title-card" data-status="announced" data-num="III." data-title="Unity Game" data-platform="ios" data-description="A game built in Unity, arriving soon on iOS." data-link="">
         <span class="title-num">III.</span>
-        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Coming Soon</p></div>
+        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Unity Game</p><span class="title-platform-tag">iOS &middot; Coming Soon</span></div>
       </button>
-      <button type="button" class="title-card" data-status="soon" data-num="IV." data-title="" data-platform="" data-description="" data-link="">
+      <button type="button" class="title-card" data-status="announced" data-num="IV." data-title="Unity Game" data-platform="windows" data-description="A game built in Unity, arriving soon on Windows." data-link="">
         <span class="title-num">IV.</span>
-        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Coming Soon</p></div>
+        <div class="title-body"><span class="diamond small" aria-hidden="true"></span><p class="title-status">Unity Game</p><span class="title-platform-tag">Windows &middot; Coming Soon</span></div>
       </button>
       <button type="button" class="title-card" data-status="soon" data-num="V." data-title="" data-platform="" data-description="" data-link="">
         <span class="title-num">V.</span>
@@ -822,16 +844,19 @@
 
 <!--
   HOW TO PUBLISH A TITLE HERE:
-  Find the matching <button class="title-card"> above and fill in its data attributes — nothing else needs to change:
 
-    data-status="released"
+  Step 1 — announce it (name it, no download link yet):
+    data-status="announced"
     data-title="Your App Name"
     data-platform="ios"            (or "android" or "windows")
-    data-description="One or two sentences about the app."
+    data-description="One short sentence about the app."
+
+  Step 2 — once it's actually downloadable, just add the link and flip the status:
+    data-status="released"
     data-link="https://your-download-or-store-link"
 
   The card's own label and the popup (title, platform, description, and the correct
-  download / App Store / Google Play button) will fill in automatically.
+  download / App Store / Google Play button) fill in automatically either way.
 -->
 
 <div class="product-modal-overlay" id="product-modal-overlay">
@@ -842,11 +867,14 @@
     <p class="product-modal-platform" id="pm-platform"><span class="diamond small" aria-hidden="true"></span><span id="pm-platform-text"></span></p>
     <p class="product-modal-desc" id="pm-desc"></p>
     <a class="product-modal-cta" id="pm-cta" href="#" target="_blank" rel="noopener">Download</a>
+    <span class="product-modal-badge" id="pm-badge">Coming Soon</span>
     <p class="product-modal-soon" id="pm-soon">This title hasn't been announced yet — check back soon, or write to <a href="mailto:gg@hcra.me" style="color:inherit;">gg@hcra.me</a>.</p>
   </div>
 </div>
+
+<section class="endpaper reveal">
   <div class="endpaper-frame">
-    <img src="marbled-endpaper.png" alt="endpaper">
+    <img src="marbled-endpaper.png" alt="Marbled endpaper, hand-combed in violet — a bookbinder's flourish between chapters">
   </div>
   <div class="mark-overlay" aria-hidden="true">
     <span class="diamond pulse" style="animation-delay:0.6s"></span>
@@ -994,6 +1022,83 @@
     }, { passive:true });
     window.addEventListener('resize', () => {
       if (activeTrigger) positionClone(activeTrigger);
+    });
+  }
+
+  // product popup — click a catalogue card to see the title, blurb, and the right download button
+  const pmOverlay = document.getElementById('product-modal-overlay');
+  const pmNum = document.getElementById('pm-num');
+  const pmTitle = document.getElementById('pm-title');
+  const pmPlatformText = document.getElementById('pm-platform-text');
+  const pmDesc = document.getElementById('pm-desc');
+  const pmCta = document.getElementById('pm-cta');
+  const pmBadge = document.getElementById('pm-badge');
+  const pmSoon = document.getElementById('pm-soon');
+
+  const platformCopy = {
+    ios:     { label: 'iOS Edition',     cta: 'Download on the App Store' },
+    android: { label: 'Android Edition', cta: 'Get it on Google Play' },
+    windows: { label: 'Windows Edition', cta: 'Download for Windows' },
+    desktop: { label: 'Desktop Edition', cta: 'Download' }
+  };
+
+  const openProductModal = (card) => {
+    const status = card.dataset.status || 'soon';
+    const num = card.dataset.num || '';
+    pmNum.textContent = num;
+
+    if (status === 'released'){
+      const platformKey = (card.dataset.platform || '').toLowerCase();
+      const copy = platformCopy[platformKey] || { label: 'Edition', cta: 'Download' };
+      pmTitle.textContent = card.dataset.title || 'Untitled';
+      pmPlatformText.textContent = copy.label;
+      pmDesc.textContent = card.dataset.description || '';
+      pmCta.href = card.dataset.link || '#';
+      pmCta.textContent = copy.cta;
+      pmCta.style.display = '';
+      pmBadge.style.display = 'none';
+      pmDesc.style.display = '';
+      document.getElementById('pm-platform').style.display = '';
+      pmSoon.style.display = 'none';
+    } else if (status === 'announced'){
+      const platformKey = (card.dataset.platform || '').toLowerCase();
+      const copy = platformCopy[platformKey] || { label: 'Edition', cta: 'Download' };
+      pmTitle.textContent = card.dataset.title || 'Untitled';
+      pmPlatformText.textContent = copy.label;
+      pmDesc.textContent = card.dataset.description || 'In development — coming soon.';
+      pmCta.style.display = 'none';
+      pmBadge.style.display = '';
+      pmDesc.style.display = '';
+      document.getElementById('pm-platform').style.display = '';
+      pmSoon.style.display = 'none';
+    } else {
+      pmTitle.textContent = 'Coming Soon';
+      document.getElementById('pm-platform').style.display = 'none';
+      pmDesc.style.display = 'none';
+      pmCta.style.display = 'none';
+      pmBadge.style.display = 'none';
+      pmSoon.style.display = '';
+    }
+
+    pmOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeProductModal = () => {
+    pmOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  if (pmOverlay){
+    document.querySelectorAll('.title-card').forEach((card) => {
+      card.addEventListener('click', () => openProductModal(card));
+    });
+    document.getElementById('pm-close').addEventListener('click', closeProductModal);
+    pmOverlay.addEventListener('click', (e) => {
+      if (e.target === pmOverlay) closeProductModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeProductModal();
     });
   }
 </script>
