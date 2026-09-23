@@ -190,15 +190,6 @@
   footer .mark{ display:flex; align-items:center; gap:10px; }
   footer .mark .diamond{ width:5px; height:5px; background:var(--dim); }
 
-  /* ---------- blackout spotlight: hover HCRA or 9AA ---------- */
-  .blackout-trigger{ cursor:pointer; transition:letter-spacing 0.3s ease; }
-  span.blackout-trigger:hover{ letter-spacing:0.03em; }
-  .blackout{ position:fixed; inset:0; z-index:90; background:var(--white); opacity:0; pointer-events:none; transition:opacity 0.45s ease; }
-  .blackout.on{ opacity:1; }
-  .spotlight{ position:fixed; z-index:91; color:#000; opacity:0; pointer-events:none; white-space:nowrap; display:flex; align-items:center; transition:opacity 0.4s ease 0.05s; }
-  .spotlight.on{ opacity:1; }
-  .spotlight img{ width:100%; height:100%; }
-
   /* ---------- sections arrive gently ---------- */
   .reveal{ opacity:0; transform:translateY(22px); transition:opacity 0.9s ease, transform 0.9s ease; }
   .reveal.in{ opacity:1; transform:none; }
@@ -251,9 +242,9 @@
 
   <section class="hero">
     <p class="label">An Independent Software House</p>
-    <div class="logo-wrap"><img class="logo blackout-trigger" src="hcra-logo.png" alt="HCRA" width="1271" height="328"></div>
+    <div class="logo-wrap"><img class="logo" src="hcra-logo.png" alt="HCRA" width="1271" height="328"></div>
     <p class="tagline">Applications and games for iOS, Android, and Windows.</p>
-    <p class="founded"><span class="diamond breathe" aria-hidden="true"></span>Founded MMXXVI by <span class="blackout-trigger" data-word="9AA">9AA</span></p>
+    <p class="founded"><span class="diamond breathe" aria-hidden="true"></span>Founded MMXXVI by 9AA</p>
     <a class="release" href="#catalogue" data-open="toolkit"><span class="now">Now available</span><span>Windows Toolkit 9.2</span></a>
     <span class="scroll-line" aria-hidden="true"></span>
   </section>
@@ -262,7 +253,7 @@
     <div class="wrap">
       <div class="part-head reveal"><h2 id="house-title">The House</h2></div>
       <div class="house">
-        <p class="statement reveal">An independent software house, founded in MMXXVI by <span class="blackout-trigger" data-word="9AA">9AA</span>.</p>
+        <p class="statement reveal">An independent software house, founded in MMXXVI by 9AA.</p>
         <div class="text reveal">
           <p><span class="dropcap" aria-hidden="true">H</span><span class="sr-only">H</span>CRA designs, builds, and publishes applications and games for iOS, Android, and Windows. Every title is created within the house, from the first sketch to the last update, and supported after release.</p>
           <p>The house works to a simple rule: a title is released only when it is complete, dependable, and respectful of the people who use it.</p>
@@ -325,13 +316,11 @@
 
 <footer>
   <div class="wrap">
-    <span class="mark"><span class="diamond" aria-hidden="true"></span><span class="blackout-trigger" data-word="HCRA">HCRA</span>&nbsp;&middot; Founded MMXXVI</span>
+    <span class="mark"><span class="diamond" aria-hidden="true"></span>HCRA&nbsp;&middot; Founded MMXXVI</span>
     <span>&copy; MMXXVI HCRA. All rights reserved.</span>
   </div>
 </footer>
 
-<div class="blackout" id="blackout" aria-hidden="true"></div>
-<div class="spotlight" id="spotlight" aria-hidden="true"></div>
 
 <script>
   // The top bar gains a hairline once the page scrolls.
@@ -381,43 +370,6 @@
       logo.style.setProperty('--tiltY', `${(((event.clientY - box.top) / box.height) - 0.5) * -6}deg`);
     });
     logoWrap.addEventListener('mouseleave', () => { logo.style.setProperty('--tiltX', '0deg'); logo.style.setProperty('--tiltY', '0deg'); });
-  }
-
-  // Hover HCRA or 9AA: the page fades to white and only that word stays, in black, exactly in place.
-  const blackout = document.getElementById('blackout');
-  const spotlight = document.getElementById('spotlight');
-  if (finePointer) {
-    let current = null;
-    const place = (el) => {
-      const box = el.getBoundingClientRect();
-      Object.assign(spotlight.style, { left: `${box.left}px`, top: `${box.top}px`, width: `${box.width}px`, height: `${box.height}px` });
-    };
-    document.querySelectorAll('.blackout-trigger').forEach((el) => {
-      el.addEventListener('mouseenter', () => {
-        current = el;
-        spotlight.replaceChildren();
-        if (el.tagName === 'IMG') {
-          const img = document.createElement('img');
-          img.src = el.getAttribute('src');
-          img.alt = '';
-          spotlight.appendChild(img);
-        } else {
-          const style = getComputedStyle(el);
-          for (const key of ['fontFamily', 'fontSize', 'fontWeight', 'fontStyle', 'letterSpacing', 'textTransform', 'fontVariantNumeric']) spotlight.style[key] = style[key];
-          spotlight.textContent = el.dataset.word || el.textContent.trim();
-        }
-        place(el);
-        blackout.classList.add('on');
-        spotlight.classList.add('on');
-      });
-      el.addEventListener('mouseleave', () => {
-        current = null;
-        blackout.classList.remove('on');
-        spotlight.classList.remove('on');
-      });
-    });
-    window.addEventListener('scroll', () => { if (current) place(current); }, { passive: true });
-    window.addEventListener('resize', () => { if (current) place(current); });
   }
 
   toolkit.addEventListener('click', (event) => {
